@@ -1,13 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ToastAndriod, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Alert, TouchableOpacity } from 'react-native';
 
 export default function App() {
+  const popUp = () => {
+    Alert.alert("Button clicked");
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Change made by Sam</Text>
       <Text>Change made by Aditya</Text>
       <Text>Open up App.js to start working on your app!</Text>
       <StatusBar style="auto" />
+      
+      <TouchableOpacity style={styles.button} onPress={popUp}>
+        <Text style={{ color: "#fff" }}>Press me</Text>
+      </TouchableOpacity>
     </View>
   );
 }
