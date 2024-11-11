@@ -2,25 +2,6 @@ import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Alert, TouchableOpacity } from 'react-native';
 
-// export default function App() {
-//   const popUp = () => {
-//     Alert.alert("Button clicked");
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.text}>Change made by Sam</Text>
-//       <Text>Change made by Aditya</Text>
-//       <Text>Open up App.js to start working on your app!</Text>
-//       <StatusBar style="auto" />
-      
-//       <TouchableOpacity style={styles.button} onPress={popUp}>
-//         <Text style={{ color: "#fff" }}>Press me</Text>
-//       </TouchableOpacity>
-//     </View>
-//   );
-// }
-
 export default function App() {
   const [bgColor, setBgColor] = useState('#fff'); // State to control background color
 
@@ -30,6 +11,10 @@ export default function App() {
 
   const turnRed = () => {
     setBgColor('#ff0000'); // Change background color to red
+  };
+
+  const resetColor = () => {
+    setBgColor('#fff'); // Change background color back to white
   };
 
   return (
@@ -45,6 +30,10 @@ export default function App() {
       
       <TouchableOpacity style={styles.redButton} onPress={turnRed}>
         <Text style={{ color: "#fff" }}>Turn Red</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.resetButton} onPress={resetColor}>
+        <Text style={{ color: "#fff" }}>Reset Color</Text>
       </TouchableOpacity>
     </View>
   );
@@ -66,16 +55,27 @@ const styles = StyleSheet.create({
 
   button: {
     borderRadius: 10,
-    backgroundColor:"#29b6f6",
+    backgroundColor: "#29b6f6",
     width: 150,
     height: 50,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    marginVertical: 10
   },
 
   redButton: {
     borderRadius: 10,
     backgroundColor: "#ff0000",
+    width: 150,
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 10
+  },
+
+  resetButton: {
+    borderRadius: 10,
+    backgroundColor: "#4caf50",
     width: 150,
     height: 50,
     justifyContent: "center",
