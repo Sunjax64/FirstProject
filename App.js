@@ -2,38 +2,9 @@ import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import DetailsScreen from './componets/DetailsScreen';
-
-// Define the HomeScreen component
-function HomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
-      <Button title="Go to Details" onPress={() => navigation.navigate('Details')}/>
-      <Button title="Go to About" onPress={() => navigation.navigate('About')}/>
-    </View>
-  );
-}
-
-// Define the DetailsScreen component
-function DetailsScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Details Screen</Text>
-      <Button title="Go Back" onPress={() => navigation.goBack()} />
-    </View>
-  );
-}
-
-function AboutScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>About Screen</Text>
-      <Button title="Go Back" onPress={() => navigation.goBack()} />
-    </View>
-  );
-}
-
+import DetailsScreen from './screens/DetailsScreen';
+import AboutScreen from './screens/HomeScreen';
+import HomeScreen from './screens/AboutScreen';
 
 // Create the Stack Navigator
 const Stack = createNativeStackNavigator();
