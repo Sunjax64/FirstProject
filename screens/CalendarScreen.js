@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 
-export default function DetailsScreen({ navigation }) {
+export default function CalendarScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Details Screen</Text>
+      <Text>Calendar Screen</Text>
       <Button title="Go Back" onPress={() => navigation.goBack()} />
     </View>
   );

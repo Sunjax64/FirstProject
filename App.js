@@ -3,7 +3,7 @@ import { View, Text, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen'; // Corrected import
-import DetailsScreen from './screens/DetailsScreen'; 
+import CalendarScreen from './screens/CalendarScreen'; 
 import AboutScreen from './screens/AboutScreen'; // Corrected import
 
 // Create the Stack Navigator
@@ -14,7 +14,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
+        <Stack.Screen name="Calendar" component={CalendarScreen} />
         <Stack.Screen name="About" component={AboutScreen} />
       </Stack.Navigator>
     </NavigationContainer>
