@@ -1,9 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Button, TextInput, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function DayScreen({ navigation }) {
+export default function DayScreen({ route, navigation }) {
+  const { date } = route.params; // Get the selected date from navigation params
   const [calories, setCalories] = useState(0); // Total calorie count
   const [input, setInput] = useState(''); // Input field for adding calories
+  const [storedData, setStoredData] = useState({}); // Data storage for all dates
+
+  // Load data for the selected date
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem('calorieData');
+        const data = jsonValue ? JSON.parse(jsonValue) : {};
+        setStoredData(data);
+        setCalories(data[date] || 0); // Load calories for the selected date
+      } catch (error) {
+        console.error('Error loading data', error);
+      }
+    };
+    loadData();
+  }, [date]);
+
+  // Save data when calories change
+  useEffect(() => {
+    const saveData = async () => {
+      try {
+        const updatedData = { ...storedData, [date]: calories };
+        setStoredData(updatedData);
+        await AsyncStorage.setItem('calorieData', JSON.stringify(updatedData));
+      } catch (error) {
+        console.error('Error saving data', error);
+      }
+    };
+    saveData();
+  }, [calories]);
 
   const handleAddCalories = () => {
     const calorieAmount = parseInt(input, 10);
@@ -17,9 +49,9 @@ export default function DayScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Calorie Tracker</Text>
+      <Text style={styles.title}>Calorie Tracker for {date}</Text>
       <Text style={styles.totalCalories}>Total Calories: {calories}</Text>
-      
+
       <TextInput
         style={styles.input}
         placeholder="Enter calories"
@@ -28,7 +60,7 @@ export default function DayScreen({ navigation }) {
         onChangeText={setInput}
       />
       <Button title="Add Calories" onPress={handleAddCalories} />
-      
+
       <View style={styles.goBackButton}>
         <Button title="Go Back" onPress={() => navigation.goBack()} />
       </View>
