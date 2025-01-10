@@ -37,15 +37,27 @@ export default function DayScreen({ route, navigation }) {
     saveData();
   }, [calories]);
 
-  const handleAddCalories = () => {
+  const handleAddCalories = async () => {
     const calorieAmount = parseInt(input, 10);
     if (!isNaN(calorieAmount)) {
-      setCalories(calories + calorieAmount);
+      const updatedCalories = calories + calorieAmount;
+      setCalories(updatedCalories); // Update the state
+  
+      // Save the updated calorie data to AsyncStorage
+      const updatedData = { ...storedData, [date]: updatedCalories };
+      setStoredData(updatedData); // Update the in-memory data
+      try {
+        await AsyncStorage.setItem('calorieData', JSON.stringify(updatedData));
+      } catch (error) {
+        console.error('Error saving data', error);
+      }
+  
       setInput(''); // Clear the input field after adding
     } else {
       alert('Please enter a valid number');
     }
   };
+  
 
   return (
     <View style={styles.container}>

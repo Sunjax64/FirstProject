@@ -23,16 +23,12 @@ const CalendarScreen = ({ navigation }) => {
           dayTextColor: '#2d4150',
           textDisabledColor: '#dd99ee',
         }}
-        onDayPress={day => {
-          setSelected(day.dateString); // Set the selected date
-          navigation.navigate('Day', { date: day.dateString }); // Navigate to DayScreen with date
+        onDayPress={(day) => {
+          setSelected(day.dateString);
+          navigation.navigate('Day', { date: day.dateString }); // Pass date as param
         }}
         markedDates={{
-          [selected]: {
-            selected: true,
-            disableTouchEvent: true,
-            selectedDotColor: 'orange',
-          },
+          [selected]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' },
         }}
       />
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
