@@ -13,7 +13,7 @@
 
 import { useNavigation } from '@react-navigation/core'
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native'
 import { auth } from '../firebase'
 
 const HomeScreen = () => {
@@ -37,6 +37,8 @@ const HomeScreen = () => {
       >
         <Text style={styles.buttonText}>Sign out</Text>
       </TouchableOpacity>
+      <Button title="Go to Calendar" onPress={() => navigation.navigate('Calendar')}/>
+      <Button title="Go to Day" onPress={() => navigation.navigate('Day')}/>
     </View>
   )
 }
