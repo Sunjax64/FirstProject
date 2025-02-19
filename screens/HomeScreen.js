@@ -17,7 +17,8 @@ import { StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native'
 import { auth } from '../firebase'
 
 const HomeScreen = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
+  const today = new Date().toISOString().split('T')[0]; // Get today's date
 
   const handleSignOut = () => {
     auth
@@ -38,7 +39,10 @@ const HomeScreen = () => {
         <Text style={styles.buttonText}>Sign out</Text>
       </TouchableOpacity>
       <Button title="Go to Calendar" onPress={() => navigation.navigate('Calendar')}/>
-      <Button title="Go to Day" onPress={() => navigation.navigate('Day')}/>
+      <Button 
+        title="Go to Today" 
+        onPress={() => navigation.navigate('Day', { date: today })}
+      />
     </View>
   )
 }
