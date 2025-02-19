@@ -3,61 +3,45 @@ import { View, Text, Button, TextInput, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function DayScreen({ route, navigation }) {
-  const { date } = route.params; // Get the selected date from navigation params
-  const [calories, setCalories] = useState(0); // Total calorie count
-  const [input, setInput] = useState(''); // Input field for adding calories
-  const [storedData, setStoredData] = useState({}); // Data storage for all dates
+  const { date } = route.params; // Get selected date from params
+  const [calories, setCalories] = useState(0); // Total calories
+  const [input, setInput] = useState(''); // User input for new calories
 
-  // Load data for the selected date
+  // Load calories for selected date when component mounts
   useEffect(() => {
-    const loadData = async () => {
+    const loadCalories = async () => {
       try {
         const jsonValue = await AsyncStorage.getItem('calorieData');
         const data = jsonValue ? JSON.parse(jsonValue) : {};
-        setStoredData(data);
-        setCalories(data[date] || 0); // Load calories for the selected date
+        setCalories(data[date] || 0);
       } catch (error) {
         console.error('Error loading data', error);
       }
     };
-    loadData();
+    loadCalories();
   }, [date]);
-
-  // Save data when calories change
-  useEffect(() => {
-    const saveData = async () => {
-      try {
-        const updatedData = { ...storedData, [date]: calories };
-        setStoredData(updatedData);
-        await AsyncStorage.setItem('calorieData', JSON.stringify(updatedData));
-      } catch (error) {
-        console.error('Error saving data', error);
-      }
-    };
-    saveData();
-  }, [calories]);
 
   const handleAddCalories = async () => {
     const calorieAmount = parseInt(input, 10);
     if (!isNaN(calorieAmount)) {
       const updatedCalories = calories + calorieAmount;
-      setCalories(updatedCalories); // Update the state
-  
-      // Save the updated calorie data to AsyncStorage
-      const updatedData = { ...storedData, [date]: updatedCalories };
-      setStoredData(updatedData); // Update the in-memory data
+      setCalories(updatedCalories); // Update state immediately
+
       try {
-        await AsyncStorage.setItem('calorieData', JSON.stringify(updatedData));
+        // Retrieve existing data, update, and save to AsyncStorage
+        const jsonValue = await AsyncStorage.getItem('calorieData');
+        const data = jsonValue ? JSON.parse(jsonValue) : {};
+        data[date] = updatedCalories;
+        await AsyncStorage.setItem('calorieData', JSON.stringify(data));
       } catch (error) {
         console.error('Error saving data', error);
       }
-  
-      setInput(''); // Clear the input field after adding
+
+      setInput(''); // Clear input field after adding
     } else {
       alert('Please enter a valid number');
     }
   };
-  
 
   return (
     <View style={styles.container}>
@@ -109,4 +93,3 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
-
